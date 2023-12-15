@@ -5,3 +5,6 @@ spring:
     mongodb:
       database: fashionflix-api-db
       uri: mongodb://localhost:27017/
+  datasource:
+      username: devil
+      password: ssss
