@@ -16,7 +16,7 @@ class UserService(
 ){
 
     fun findUserByEmail(email: String): User? {
-         return userRepository.findUserById(email)?.toUserDomain()
+         return userRepository.findUserByEmail(email)?.toUserDomain()
     }
 
     fun createUser(user: User): ResponseEntity<AuthResponse> {
@@ -25,6 +25,10 @@ class UserService(
         val authResponse = AuthResponse(token , "Signup Success")
 
         return ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED)
+    }
+
+    fun findUserById(id: String): User? {
+        return userRepository.findUserById(id)?.toUserDomain()
     }
 
     fun loginUserHandler(email: String): User? {

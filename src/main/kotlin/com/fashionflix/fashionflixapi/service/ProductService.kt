@@ -20,6 +20,8 @@ class ProductService(val productRepository: ProductRepository, val categoryRepos
 
     fun createProduct(request: CreateProductRequest): Product? {
 
+        val category = categoryRepository.findById(request.categoryId)?.toCategoryDomain()
+
         val newProduct = ProductDTO(
             generatedUniqueId(),
             request.title,
@@ -35,10 +37,12 @@ class ProductService(val productRepository: ProductRepository, val categoryRepos
             request.categoryId,
             Instant.now()
         )
-        return productRepository.createProduct(newProduct)?.toProductDomain()
+        return productRepository.createProduct(newProduct)?.toProductDomain(category)
     }
 
     fun updateProduct(productId:String, request: CreateProductRequest): Product? {
+
+        val category = categoryRepository.findById(request.categoryId)?.toCategoryDomain()
         val updatedProduct = ProductDTO(
             productId,
             request.title,
@@ -54,7 +58,7 @@ class ProductService(val productRepository: ProductRepository, val categoryRepos
             request.categoryId,
             Instant.now()
         )
-        return productRepository.updateProduct(productId, updatedProduct)?.toProductDomain()
+        return productRepository.updateProduct(productId, updatedProduct)?.toProductDomain(category)
     }
 
     fun deleteProduct(productId:String) {
@@ -62,14 +66,18 @@ class ProductService(val productRepository: ProductRepository, val categoryRepos
     }
 
     fun getProductByProductId(productId: String): Product? {
-        return productRepository.findProductByProductId(productId)?.toProductDomain()
+        val product = productRepository.findProductByProductId(productId)
+        val category = categoryRepository.findById(product?.categoryId)?.toCategoryDomain()
+
+        return product?.toProductDomain(category)
     }
     fun getAllProductPage(productPageInput: ProductPageInput): ProductPage {
         val sort = setSort(productPageInput.sort)
-        val criteria = Criteria.where("categoryId").`is`(productPageInput.category)
+        val criteria = Criteria.where("categoryId").`is`(productPageInput.categoryId)
+        val category = categoryRepository.findById(productPageInput.categoryId)?.toCategoryDomain()
 
         val page = PageRequest.of(productPageInput.pageNumber, productPageInput.pageSize, sort)
-        val result: Page<Product?> = productRepository.getAllProductPage(page, criteria).map { it?.toProductDomain() }
+        val result: Page<Product?> = productRepository.getAllProductPage(page, criteria).map { it?.toProductDomain(category) }
 
         return ProductPage(rows = result.toList().map{ it }, totalPages = result.totalPages.toLong(), totalRecords = result.totalElements)
     }

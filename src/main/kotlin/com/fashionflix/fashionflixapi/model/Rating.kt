@@ -4,9 +4,9 @@ import java.time.Instant
 
 data class Rating (
     val ratingId: String,
-    val productId: String,
-    val customerId: String,
-    val rating: Float,
+    val product: Product?,
+    val user: User?,
+    val rating: Double,
     val createdAt: Instant
 ) {
 }

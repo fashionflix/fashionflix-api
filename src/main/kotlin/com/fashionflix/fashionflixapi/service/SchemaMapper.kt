@@ -1,13 +1,14 @@
 package com.fashionflix.fashionflixapi.service
 
 import com.fashionflix.fashionflixapi.common.clients.db.address.AddressDTO
+import com.fashionflix.fashionflixapi.common.clients.db.cart.CartDTO
+import com.fashionflix.fashionflixapi.common.clients.db.cartItem.CartItemDTO
+import com.fashionflix.fashionflixapi.common.clients.db.cartItem.CartItemRepository
 import com.fashionflix.fashionflixapi.common.clients.db.category.CategoryDTO
 import com.fashionflix.fashionflixapi.common.clients.db.product.ProductDTO
 import com.fashionflix.fashionflixapi.common.clients.db.user.UserDTO
-import com.fashionflix.fashionflixapi.model.Address
-import com.fashionflix.fashionflixapi.model.Category
-import com.fashionflix.fashionflixapi.model.Product
-import com.fashionflix.fashionflixapi.model.User
+import com.fashionflix.fashionflixapi.model.*
+
 fun UserDTO.toUserDomain() = User(
     userId,
     firstName,
@@ -19,19 +20,19 @@ fun UserDTO.toUserDomain() = User(
     createdAt
 )
 
-fun AddressDTO.toAddressDomain() = Address(
+fun AddressDTO.toAddressDomain(user: User?) = Address(
     addressId,
+    user,
     firstName,
     lastName,
     streetAddress,
-    customerId,
     city,
     state,
     zipCode,
     mobile
 )
 
-fun ProductDTO.toProductDomain() = Product(
+fun ProductDTO.toProductDomain(category: Category?) = Product(
     productId,
     title,
     description,
@@ -43,7 +44,7 @@ fun ProductDTO.toProductDomain() = Product(
     discountedPrice,
     discountedPercent,
     quantity,
-    categoryId,
+    category,
     createdAt
 )
 
