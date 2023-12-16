@@ -1,6 +1,5 @@
 package com.fashionflix.fashionflixapi.common.clients.db.user
 
-import com.fashionflix.fashionflixapi.common.clients.db.address.AddressDTO
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.Instant
@@ -17,5 +16,6 @@ data class UserDTO(
     val email: String,
     val role: String,
     val mobile: String,
-    val createdAt: Instant
+    val createdAt: Instant,
+    val addressList: List<String> ?= null
 )

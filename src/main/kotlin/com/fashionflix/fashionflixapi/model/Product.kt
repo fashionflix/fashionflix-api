@@ -14,7 +14,7 @@ data class Product(
     val discountedPrice: Float,
     val discountedPercent: Float,
     val quantity: Int,
-    val categoryId: String,
+    val category: Category?,
     val createdAt: Instant
 ) {
 }

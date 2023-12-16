@@ -6,8 +6,8 @@ import java.time.Instant
 @Document("rating")
 data class RatingDTO (
     val ratingId: String,
-    val productId: String,
-    val customerId: String,
-    val rating: Float,
+    val productId: String?,
+    val userId: String?,
+    val rating: Double,
     val createdAt: Instant
 )

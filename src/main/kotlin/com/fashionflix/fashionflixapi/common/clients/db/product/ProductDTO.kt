@@ -1,8 +1,10 @@
 package com.fashionflix.fashionflixapi.common.clients.db.product
 
+import com.fashionflix.fashionflixapi.common.clients.db.category.CategoryDTO
 import com.fashionflix.fashionflixapi.model.Size
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.DocumentReference
 import java.time.Instant
 
 @Document("product")

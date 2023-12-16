@@ -24,6 +24,13 @@ class CategoryRepository(@Autowired val mongoTemplate: MongoTemplate){
 
         return mongoTemplate.findOne(query, CategoryDTO::class.java)
     }
+    fun findById(categoryId: String?): CategoryDTO? {
+        val criteria = Criteria.where("categoryId").`is`(categoryId)
+        val query = Query().addCriteria(criteria)
+
+        return mongoTemplate.findOne(query, CategoryDTO::class.java)
+    }
+
     fun findAllCategory(): List<CategoryDTO> {
         val query = Query()
         return mongoTemplate.find(query, CategoryDTO::class.java)
